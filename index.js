@@ -1,4 +1,5 @@
 const path = require('path');
+const request = require('request');
 
 const express = require('express');
 const app = express();
@@ -8,7 +9,14 @@ app.use('/app', express.static('app'));
 app.use('/images', express.static('images'));
 app.use('/node_modules', express.static('node_modules'));
 
-app.get('*', (request, response) => {
+app.post('/api/login', (req, response) => {
+  var url = 'https://api.singu.com.br/v2/artist/login';
+  var newRequest = request.post({uri: url, json: req.body});
+
+  req.pipe(newRequest).pipe(response);
+});
+
+app.get('*', (req, response) => {
   response.sendFile(path.join(__dirname, 'app/index.html'));
 });
 

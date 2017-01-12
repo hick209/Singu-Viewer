@@ -27,17 +27,17 @@
   ) {
     const viewModel = this;
 
-    const apiCallGetUrl = 'https://api.singu.com.br/v2/artist/free-schedules';
-    const headers = {
-      "Authorization": `Bearer ${user.token}`
-    };
+    // const apiCallGetUrl = 'https://api.singu.com.br/v2/artist/free-schedules';
+    // const headers = {
+    //   "Authorization": `Bearer ${user.token}`
+    // };
 
     $scope.toolbar = {};
 
     init();
 
     function init() {
-      AuthService($scope, () => { $scope.$apply(); });
+      AuthService($scope, () => { console.info(`Logged in as ${$scope.auth.user.name}`) });
     }
   }
 })();

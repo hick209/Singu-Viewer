@@ -31,55 +31,9 @@
 		ng-controller="AppController">
 
 		<div layout="row" layout-fill ng-show="auth.signedIn">
-			<md-sidenav
-				class="md-sidenav-left"
-				layout="column"
-				md-component-id="menu"
-				md-is-locked-open="$mdMedia('gt-md')"
-				md-whiteframe="16">
-
-				<md-content flex role="navigation">
-					<md-toolbar>
-						<div class="md-toolbar-tools">
-							<span class="md-headline">
-								<h2>Master panel</h2>
-							</span>
-						</div>
-					</md-toolbar>
-
-					<md-list-item
-						ng-repeat="option in menu.options"
-						ng-hide="option.hidden"
-						ng-class="{'active' : menu.isSelected(option.link)}"
-						ng-click="menu.select(option)"
-						ng-href="{{ option.link }}">
-						<md-icon
-							class="md-24"
-							md-font-library="material-icons">
-							{{ option.icon }}
-						</md-icon>
-				    <p>{{ option.name }}</p>
-						<md-divider></md-divider>
-				  </md-list-item>
-		    </md-content>
-			</md-sidenav>
-
 			<main layout="column" flex>
 				<md-toolbar md-whiteframe="4">
 					<div class="md-toolbar-tools">
-						<md-button
-							class="md-icon-button"
-							tabindex="1"
-							hide-gt-md
-							aria-label="Toggle Menu"
-							ng-click="menu.toggle()">
-							<md-icon
-								class="md-24"
-								md-font-src="material-icons">
-								menu
-							</md-icon>
-						</md-button>
-						<img ng-src="{{ auth.user.image }}" class="userAvatar md-avatar" alt="{{ auth.user.name }}"></img>
 						<span class="md-headline" layout-margin>
 							<h2>{{ auth.user.name }}</h2>
 						</span>
@@ -100,8 +54,8 @@
 							</md-button>
 					    <md-menu-content>
 					      <md-menu-item>
-									<md-button ng-click="auth.signOut()">
-					          Sign out
+									<md-button ng-click="auth.logout()">
+					          Logout
 					        </md-button>
 					    	</md-menu-item>
 							</md-menu-content>
@@ -123,7 +77,7 @@
 			<md-card md-whiteframe="24" style="min-width: 360px;">
 				<md-toolbar>
 					<div class="md-toolbar-tools">
-						<h2>Sign In</h2>
+						<h2>Login</h2>
 					</div>
 				</md-toolbar>
 
@@ -148,8 +102,8 @@
 								ng-model="email"
 								ng-pattern="/^.+@.+\..+$/"/>
 							<div ng-messages="authForm.userEmail.$error" role="alert">
-								<div ng-message="pattern">This doesn't look like an e-mail address</div>
-								<div ng-message="required">Required</div>
+								<div ng-message="pattern">Email inválido</div>
+								<div ng-message="required">Obrigatório</div>
 							</div>
 						</md-input-container>
 
@@ -162,23 +116,21 @@
 							<input
 								required
 								name="userPassword"
-								placeholder="Password"
+								placeholder="Senha"
 								type="password"
 								md-no-asterisk
 								ng-model="password"/>
 							<div ng-messages="authForm.userPassword.$error" role="alert">
-								<div ng-message="required">Required</div>
+								<div ng-message="required">Obrigatório</div>
 							</div>
 						</md-input-container>
 
 						<md-button
 							class="md-primary md-raised"
 							type="submit"
-							ng-click="auth.signInWithEmail(email, password)">
+							ng-click="auth.login(email, password)">
 							Login
 				    </md-button>
-
-						<md-divider layout-margin></md-divider>
 					</form>
 				</md-card-content>
 			</md-card>
