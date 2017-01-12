@@ -4,6 +4,7 @@
       .controller('RequestsController', [
         '$q',
         'moment',
+        'AuthService',
         'RequestsService',
         'ErrorHandler',
         RequestsController
@@ -12,6 +13,7 @@
   function RequestsController(
     $q,
     moment,
+    AuthService,
     RequestsService,
     ErrorHandler
   ) {
@@ -37,14 +39,15 @@
     init();
 
     function init() {
-      const token = 'invalid-token';
-      loadRequests(token);
+      loadRequests();
     }
 
-    function loadRequests(token) {
+    function loadRequests() {
       viewModel.loading = true;
+
+      const token = AuthService.token;
       RequestsService.get(token)
-          .then(result => {
+          .then(response => {
             if (response.status == 200) {
               const result = response.data;
               viewModel.sections = parseSections(result);
@@ -61,9 +64,31 @@
     }
 
     function parseSections(result) {
-      var sections = []; // TODO
+      const days = {};
+      for (const item of result) {
+        const key = moment(item.date).startOf('day');
+        const group = (days[key] || []);
+        group.push(item);
+
+        days[key] = group;
+      }
+
+      var sections = [];
+      // TODO sort the array
+      for (const key of Object.keys(days)) {
+        const section = {
+          date: key,
+          items: parseItems(days[key]),
+        };
+
+        sections.push(section);
+      }
 
       return sections;
+    }
+
+    function parseItems(items) {
+      return [];
     }
   }
 })();

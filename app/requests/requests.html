@@ -1,7 +1,7 @@
 <md-content layout-padding layout="column">
   <!-- TODO, check out for expandable list http://embed.plnkr.co/NMvyXBL3FYf2b2XsAlz9 -->
   <section ng-repeat="section in viewModel.sections">
-    <md-subheader>{{ section.date | date }}</md-subheader>
+    <md-subheader>{{ section.date | amUtc | amLocal | amCalendarDate : null : 'days' }}</md-subheader>
     <md-card>
       <md-item class="md-2-line" ng-repeat="item in section.items">
         <p> {{ item }} </p>
