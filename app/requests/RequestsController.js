@@ -22,19 +22,7 @@
     viewModel.loading = false;
     viewModel.loadingMessage = '';
 
-    viewModel.sections = [
-      {
-        date: new Date(),
-        items: [
-          {
-            name: "item 1",
-          },
-          {
-            name: "item 2",
-          },
-        ]
-      },
-    ];
+    viewModel.sections = [];
 
     init();
 
@@ -73,8 +61,9 @@
         days[key] = group;
       }
 
-      var sections = [];
+      const sections = [];
       // TODO sort the array
+
       for (const key of Object.keys(days)) {
         const section = {
           date: key,
@@ -87,8 +76,30 @@
       return sections;
     }
 
-    function parseItems(items) {
-      return [];
+    function parseItems(data) {
+      const items = [];
+      for (const item of data) {
+        console.log(item);
+
+        items.push({
+          service: item.services[0].name['pt-BR'],
+          date: item.date,
+          code: item.shortCode,
+          address: {
+            place: `${item.address.place}, ${item.address.streetNumber}`,
+            reference: item.address.referencePoint,
+            lat: item.lat,
+            lng: item.lng,
+          },
+          client: {
+            name: item.user.name,
+            email: item.user.email,
+            phone: item.user.phone,
+          },
+        });
+      }
+
+      return items;
     }
   }
 })();

@@ -3,10 +3,18 @@
   <section ng-repeat="section in viewModel.sections">
     <md-subheader>{{ section.date | amUtc | amLocal | amCalendarDate : null : 'days' }}</md-subheader>
     <md-card>
-      <md-item class="md-2-line" ng-repeat="item in section.items">
-        <p> {{ item }} </p>
-        <p> {{ item }} again </p>
+      <md-item ng-repeat="item in section.items">
+        <md-context
+          layout-padding
+          layout="column">
+          <span> {{ item.service }} </span>
+          <span> {{ item.code }} </span>
+          <span> {{ item.date | amUtc | amLocal | amDateFormat : 'HH:mm' }} </span>
 
+          <span> {{ item.client.name }} </span>
+          <span> {{ item.address.place }} </span>
+          <span> {{ item.address.reference }} </span>
+        </md-context>
         <md-divider inset></md-divider>
       </md-item>
     </md-card>
