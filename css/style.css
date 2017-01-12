@@ -1,0 +1,21 @@
+md-list-item.active md-icon {
+  /*color: '{{primary-color}}'; TODO fix this */
+  color: rgba(105,240,174,0.87);
+}
+
+md-toolbar.md-table-toolbar .md-toolbar-tools md-icon {
+  color: rgba(255,255,255,0.87);
+}
+
+/* This is a hack to make possible for a Toast to be centered
+ * See https://github.com/angular/material/issues/1773#issuecomment-242980273 */
+md-toast.md-center {
+  left: 50%;
+  transform: translate3d(-50%, 0, 0);
+}
+
+.userAvatar {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}

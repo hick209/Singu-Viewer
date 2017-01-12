@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Singu Viewer</title>
+		<meta name="description" content="A better way to be Singu">
+
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<base href="/">
+
+		<!-- Material Icons -->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+		<!-- Angular Material style sheet -->
+  	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css" type="text/css">
+
+		<!-- Angular Material Data Table -->
+		<link rel="stylesheet" href="node_modules/angular-material-data-table/dist/md-data-table.min.css" type="text/css"/>
+
+		<link rel="stylesheet" href="css/style.css" type="text/css">
+	</head>
+
+	<style>
+	</style>
+
+	<body
+		ng-app="singu-viewer"
+		ng-cloak
+		ng-controller="AppController">
+
+		<div layout="row" layout-fill ng-show="auth.signedIn">
+			<md-sidenav
+				class="md-sidenav-left"
+				layout="column"
+				md-component-id="menu"
+				md-is-locked-open="$mdMedia('gt-md')"
+				md-whiteframe="16">
+
+				<md-content flex role="navigation">
+					<md-toolbar>
+						<div class="md-toolbar-tools">
+							<span class="md-headline">
+								<h2>Master panel</h2>
+							</span>
+						</div>
+					</md-toolbar>
+
+					<md-list-item
+						ng-repeat="option in menu.options"
+						ng-hide="option.hidden"
+						ng-class="{'active' : menu.isSelected(option.link)}"
+						ng-click="menu.select(option)"
+						ng-href="{{ option.link }}">
+						<md-icon
+							class="md-24"
+							md-font-library="material-icons">
+							{{ option.icon }}
+						</md-icon>
+				    <p>{{ option.name }}</p>
+						<md-divider></md-divider>
+				  </md-list-item>
+		    </md-content>
+			</md-sidenav>
+
+			<main layout="column" flex>
+				<md-toolbar md-whiteframe="4">
+					<div class="md-toolbar-tools">
+						<md-button
+							class="md-icon-button"
+							tabindex="1"
+							hide-gt-md
+							aria-label="Toggle Menu"
+							ng-click="menu.toggle()">
+							<md-icon
+								class="md-24"
+								md-font-src="material-icons">
+								menu
+							</md-icon>
+						</md-button>
+						<img ng-src="{{ auth.user.image }}" class="userAvatar md-avatar" alt="{{ auth.user.name }}"></img>
+						<span class="md-headline" layout-margin>
+							<h2>{{ auth.user.name }}</h2>
+						</span>
+						<div flex><!-- Fill up the white space --></div>
+					  <md-menu>
+							<md-button
+								class="md-icon-button"
+								tabindex="2"
+								aria-label="More"
+								ng-click="$mdOpenMenu($event)"
+								md-menu-origin>
+								<md-icon
+									class="md-24"
+									tabindex="-1"
+									md-font-src="material-icons">
+									more_vert
+								</md-icon>
+							</md-button>
+					    <md-menu-content>
+					      <md-menu-item>
+									<md-button ng-click="auth.signOut()">
+					          Sign out
+					        </md-button>
+					    	</md-menu-item>
+							</md-menu-content>
+					  </md-menu>
+					</div>
+				</md-toolbar>
+
+				<div ng-view flex><!-- Main content will go here --></div>
+			</main>
+		</div>
+
+		<!-- Auth panel -->
+		<div
+			class="md-padding"
+			layout="column"
+			layout-fill
+			layout-align="center center"
+			ng-show="auth.signedIn === false">
+			<md-card md-whiteframe="24" style="min-width: 360px;">
+				<md-toolbar>
+					<div class="md-toolbar-tools">
+						<h2>Sign In</h2>
+					</div>
+				</md-toolbar>
+
+				<md-card-content>
+					<div layout-margin layout-padding layout="row" layout-align="center" ng-show="auth.working">
+						<md-progress-circular md-mode="indeterminate"></md-progress-circular>
+					</div>
+
+					<form name="authForm" layout="column" ng-show="!auth.working">
+						<md-input-container>
+							<md-icon
+								class="md-24"
+								md-font-library="material-icons">
+								email
+							</md-icon>
+							<input
+								required
+								name="userEmail"
+								placeholder="Email"
+								type="email"
+								md-no-asterisk
+								ng-model="email"
+								ng-pattern="/^.+@.+\..+$/"/>
+							<div ng-messages="authForm.userEmail.$error" role="alert">
+								<div ng-message="pattern">This doesn't look like an e-mail address</div>
+								<div ng-message="required">Required</div>
+							</div>
+						</md-input-container>
+
+						<md-input-container>
+							<md-icon
+								class="md-24"
+								md-font-library="material-icons">
+								vpn_key
+							</md-icon>
+							<input
+								required
+								name="userPassword"
+								placeholder="Password"
+								type="password"
+								md-no-asterisk
+								ng-model="password"/>
+							<div ng-messages="authForm.userPassword.$error" role="alert">
+								<div ng-message="required">Required</div>
+							</div>
+						</md-input-container>
+
+						<md-button
+							class="md-primary md-raised"
+							type="submit"
+							ng-click="auth.signInWithEmail(email, password)">
+							Login
+				    </md-button>
+
+						<md-divider layout-margin></md-divider>
+					</form>
+				</md-card-content>
+			</md-card>
+		</div>
+
+		<!-- AngularJS -->
+		<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+		<script type="text/javascript" src="node_modules/angular-route/angular-route.min.js"></script>
+		<script type="text/javascript" src="node_modules/angular-messages/angular-messages.min.js"></script>
+
+		<!-- Angular Material requires Angular.js Libraries -->
+	  <script type="text/javascript" src="node_modules/angular-animate/angular-animate.min.js"></script>
+	  <script type="text/javascript" src="node_modules/angular-aria/angular-aria.min.js"></script>
+	  <!-- Angular Material Library -->
+	  <script type="text/javascript" src="node_modules/angular-material/angular-material.min.js"></script>
+
+		<!-- Angular Material Data Table -->
+		<script type="text/javascript" src="node_modules/angular-material-data-table/dist/md-data-table.min.js"></script>
+
+		<!-- Google Maps -->
+		<script type="text/javascript" src="node_modules/ngmap/build/scripts/ng-map.min.js"></script>
+
+		<!-- Firebase -->
+		<script type="text/javascript" src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+
+		<!-- Scripts -->
+		<script type="text/javascript" src="app/app.js"></script>
+		<script type="text/javascript" src="app/config.js"></script>
+		<script type="text/javascript" src="app/common/ErrorHandler.js"></script>
+		<script type="text/javascript" src="app/auth/AuthService.js"></script>
+	</body>
+</html>

@@ -1,0 +1,11 @@
+<md-card md-whiteframe="2" flex>
+  <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Main</span>
+      <pre class="md-subhead">{{ viewModel.loadingMessage }}</pre>
+    </md-card-title-text>
+    <md-card-content>
+      <md-progress-circular ng-if="viewModel.loading"></md-progress-circular>
+    </md-card-content>
+  </md-card-title>
+</md-card>

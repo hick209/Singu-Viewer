@@ -1,0 +1,297 @@
+<md-content layout="column">
+  <md-card md-whiteframe="2" flex ng-hide="viewModel.user">
+    <md-toolbar
+      class="md-table-toolbar md-default"
+      ng-hide="viewModel.selected.length">
+      <div class="md-toolbar-tools">
+        <span>Users</span>
+      </div>
+    </md-toolbar>
+
+    <md-toolbar
+      class="md-table-toolbar alternate"
+      ng-show="viewModel.selected.length">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="viewModel.selected = []">
+          <md-icon
+            class="md-24"
+            md-font-src="material-icons">
+            clear
+            <md-tooltip md-direction="bottom">Clear selection</md-tooltip>
+          </md-icon>
+        </md-button>
+        <div>{{ viewModel.selected.length }} {{ viewModel.selected.length > 1 ? 'items' : 'item' }} selected</div>
+        <div flex><!-- Fill the empty space --></div>
+
+        <!-- Extra options will go here -->
+      </div>
+    </md-toolbar>
+
+    <md-table-container>
+      <table
+        ng-model="viewModel.selected"
+        md-table
+        md-row-select
+        multiple
+        md-progress="viewModel.promise">
+        <thead>
+          <thead
+            md-head
+            md-on-reorder="viewModel.getData">
+            <tr md-row>
+              <th md-column>User</th>
+              <th md-column>ID</th>
+              <th md-column>Name</th>
+              <th md-column>Email</th>
+            </tr>
+          </thead>
+        </thead>
+        <tbody md-body>
+          <tr
+            md-row
+            md-auto-select
+            md-select="item"
+            md-select-id="id"
+            ng-repeat="item in viewModel.data">
+            <td md-cell>
+              <img ng-src="{{ item.image }}" class="userAvatar md-avatar" alt="{{ item.name }}"/>
+            </td>
+            <td md-cell><a ng-href="/users/{{ item.id }}">{{ item.id }}</a></td>
+            <td md-cell>{{ item.name }}</td>
+            <td md-cell>{{ item.email }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <md-table-pagination
+        md-page-select
+        md-page="viewModel.query.page"
+        md-limit="viewModel.query.limit"
+        md-limit-options="viewModel.query.limitOptions"
+        md-total="{{ viewModel.total }}"
+        md-on-paginate="viewModel.getData">
+      </md-table-pagination>
+    </md-table-container>
+  </md-card>
+
+  <md-card md-whiteframe="2" flex ng-if="viewModel.user">
+    <md-toolbar class="md-default">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="viewModel.user = null" ng-href="/users">
+          <md-icon
+            class="md-24"
+            md-font-src="material-icons">
+            arrow_back
+          </md-icon>
+        </md-button>
+        <img ng-src="{{ viewModel.user.image }}" class="userAvatar md-avatar" alt="{{ viewModel.user.name }}"/>
+        <span class="md-headline" layout-margin>{{ viewModel.user.name }}</span>
+      </div>
+    </md-toolbar>
+
+    <md-card-content>
+      <ul>
+        <li>Email: {{ viewModel.user.email }}</li>
+        <li>Gender: {{ viewModel.user.gender === 1 ? 'Male' : 'Female' }}</li>
+        <li ng-if="viewModel.user.contacts">
+          Contacts:
+          <ul>
+            <li ng-repeat="contact in viewModel.user.contacts">
+              Relationship: {{ contact.relationship }}
+              <ul>
+                <li>Name: {{ contact.name }}</li>
+                <li>Phone: {{ contact.phone }}</li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+        <li ng-if="viewModel.user.medicalInfo">
+          Medical Info:
+          <ul>
+            <li ng-repeat="medicalInfo in viewModel.user.medicalInfo">
+              <span>{{ medicalInfo.section }} : {{ medicalInfo.values.join(', ') }}</span>
+            </li>
+          </ul>
+        </li>
+        <li><a ng-href="/users/{{viewModel.user.id}}/routes">Routes</a></li>
+        <li><a ng-href="/users/{{viewModel.user.id}}/collisions">Collisions</a></li>
+
+        <md-divider></md-divider>
+
+        Dev
+        <li><a ng-href="/users/{{viewModel.user.id}}/routes-dev">Dev Routes</a></li>
+        <li><a ng-href="/users/{{viewModel.user.id}}/collisions-dev">Dev Collisions</a></li>
+      </ul>
+    </md-card-content>
+  </md-card>
+
+  <md-card md-whiteframe="2" flex ng-if="viewModel.userRoutes">
+    <md-toolbar
+      class="md-table-toolbar md-default"
+      ng-hide="viewModel.userRoutes.selected.length">
+      <div class="md-toolbar-tools">
+        <span>{{ viewModel.userRoutes.devMode ? 'Dev ' : '' }}Routes</span>
+      </div>
+    </md-toolbar>
+    <md-toolbar
+      class="md-table-toolbar alternate"
+      ng-show="viewModel.userRoutes.selected.length">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="viewModel.userRoutes.selected = []">
+          <md-icon
+            class="md-24"
+            md-font-src="material-icons">
+            clear
+            <md-tooltip md-direction="bottom">Clear selection</md-tooltip>
+          </md-icon>
+        </md-button>
+        <div>{{ viewModel.userRoutes.selected.length }} {{ viewModel.userRoutes.selected.length > 1 ? 'items' : 'item' }} selected</div>
+        <div flex><!-- Fill the empty space --></div>
+        <md-button class="md-icon-button" ng-click="viewModel.userRoutes.delete($event)">
+          <md-icon
+            class="md-24"
+            md-font-src="material-icons">
+            delete
+            <md-tooltip md-direction="bottom">Delete</md-tooltip>
+          </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-table-container>
+      <table
+        ng-model="viewModel.userRoutes.selected"
+        md-table
+        md-row-select
+        multiple
+        md-progress="viewModel.userRoutes.promise">
+        <thead
+          md-head
+          md-on-reorder="viewModel.userRoutes.getData">
+          <tr md-row>
+            <th md-column>User</th>
+            <th md-column>Route ID</th>
+            <th md-column md-numeric>Spanshots</th>
+            <th md-column>Duration</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr
+            md-row
+            md-auto-select
+            md-select="item"
+            md-select-id="id"
+            ng-repeat="item in viewModel.userRoutes.data">
+            <td md-cell>
+              <img ng-src="{{ item.user.image }}" class="userAvatar md-avatar" alt="{{ item.user.name }}">
+                <md-tooltip md-direction="bottom">{{ item.user.name }}</md-tooltip>
+              </img>
+            </td>
+            <td md-cell>
+              <a ng-href="/routes{{ viewModel.userRoutes.pathExtension }}/{{ item.id }}">{{ item.id }}</a>
+            </td>
+            <td md-cell>{{ item.snapshotCount }}</td>
+            <td md-cell>
+              <span>
+                {{ item.duration | date : 'm:ss': 'UTC' }}
+                <md-tooltip>
+                  {{ item.start | date : 'short' }} {{ item.end ? '-' : '' }} {{ item.end ? (item.end | date : 'shortTime') : '' }}
+                </md-tooltip>
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+    <md-table-pagination
+      md-page-select
+      md-page="viewModel.userRoutes.query.page"
+      md-limit="viewModel.userRoutes.query.limit"
+      md-limit-options="viewModel.userRoutes.query.limitOptions"
+      md-total="{{ viewModel.userRoutes.total }}"
+      md-on-paginate="viewModel.userRoutes.getData">
+    </md-table-pagination>
+  </md-card>
+
+  <md-card md-whiteframe="2" flex ng-if="viewModel.userCollisions">
+    <md-toolbar
+      class="md-table-toolbar md-default"
+      ng-hide="viewModel.userCollisions.selected.length">
+      <div class="md-toolbar-tools">
+        <span>{{ viewModel.devMode ? 'Dev ' : '' }}Collisions</span>
+      </div>
+    </md-toolbar>
+    <md-toolbar
+      class="md-table-toolbar alternate"
+      ng-show="viewModel.userCollisions.selected.length">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="viewModel.userCollisions.selected = []">
+          <md-icon
+            class="md-24"
+            md-font-src="material-icons">
+            clear
+            <md-tooltip md-direction="bottom">Clear selection</md-tooltip>
+          </md-icon>
+        </md-button>
+        <div>{{ viewModel.userCollisions.selected.length }} {{ viewModel.userCollisions.selected.length > 1 ? 'items' : 'item' }} selected</div>
+        <div flex><!-- Fill the empty space --></div>
+        <md-button class="md-icon-button" ng-click="viewModel.userCollisions.delete($event)">
+          <md-icon
+            class="md-24"
+            md-font-src="material-icons">
+            delete
+            <md-tooltip md-direction="bottom">Delete</md-tooltip>
+          </md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-table-container>
+      <table
+        ng-model="viewModel.userCollisions.selected"
+        md-table
+        md-row-select
+        multiple
+        md-progress="viewModel.userCollisions.promise">
+        <thead
+          md-head
+          md-on-reorder="viewModel.userCollisions.getData">
+          <tr md-row>
+            <th md-column>User</th>
+            <th md-column>Collision ID</th>
+            <th md-column>Route ID</th>
+            <th md-column>Status</th>
+            <th md-column>Location</th>
+            <th md-column>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr
+            md-row
+            md-auto-select
+            md-select="item"
+            md-select-id="id"
+            ng-repeat="item in viewModel.userCollisions.data">
+            <td md-cell>
+              <img ng-src="{{ item.user.image }}" class="userAvatar md-avatar" alt="{{ item.user.name }}">
+                <md-tooltip md-direction="bottom">{{ item.user.name }}</md-tooltip>
+              </img>
+            </td>
+            <td md-cell>{{ item.id }}</td>
+            <td md-cell>{{ item.routeId }}</td>
+            <td md-cell>{{ item.status }}</td>
+            <td md-cell>{{ item.latitude }}, {{ item.longitude }}</td>
+            <td md-cell>{{ item.timestamp | date : 'short' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+    <md-table-pagination
+      md-page-select
+      md-page="viewModel.userCollisions.query.page"
+      md-limit="viewModel.userCollisions.query.limit"
+      md-limit-options="viewModel.userCollisions.query.limitOptions"
+      md-total="{{ viewModel.userCollisions.total }}"
+      md-on-paginate="viewModel.userCollisions.getData">
+    </md-table-pagination>
+  </md-card>
+</md-content>
