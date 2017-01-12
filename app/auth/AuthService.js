@@ -44,7 +44,7 @@
       const loginPostUrl = '/api/login';
       const payload = { 'email': email, 'password': password };
 
-      scope.auth.working = true;
+      service.auth.working = true;
       return $http.post(loginPostUrl, payload)
           .then(response => {
             if (response.status == 200) {
