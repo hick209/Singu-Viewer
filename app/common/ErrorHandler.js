@@ -16,8 +16,8 @@
 
       // Show toast
       let message;
-      if (error.message) {
-        message = error.message;
+      if (error.statusText) {
+        message = error.statusText;
         console.debug(message);
       } else {
         message = error;
