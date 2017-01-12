@@ -30,7 +30,10 @@
 		ng-cloak
 		ng-controller="AppController">
 
-		<div layout="row" layout-fill ng-show="auth.signedIn">
+		<div
+			layout="row"
+			layout-fill
+			ng-show="auth.isSignedIn()">
 			<main layout="column" flex>
 				<md-toolbar md-whiteframe="4">
 					<div class="md-toolbar-tools">
@@ -88,7 +91,7 @@
 			layout="column"
 			layout-fill
 			layout-align="center center"
-			ng-show="auth.signedIn === false">
+			ng-hide="auth.isSignedIn()">
 			<md-card md-whiteframe="24" style="min-width: 360px;">
 				<md-toolbar>
 					<div class="md-toolbar-tools">
@@ -154,6 +157,7 @@
 		<!-- AngularJS -->
 		<script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
 		<script type="text/javascript" src="node_modules/angular-route/angular-route.min.js"></script>
+		<script type="text/javascript" src="node_modules/angular-cookies/angular-cookies.min.js"></script>
 		<script type="text/javascript" src="node_modules/angular-messages/angular-messages.min.js"></script>
 
 		<!-- Angular Material requires Angular.js Libraries -->

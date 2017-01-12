@@ -35,7 +35,7 @@
 
     $scope.toolbar = {};
     $scope.tabs = {
-      selectedIndex: $location.path.startsWith('/requests') ? 1 : 0,
+      selectedIndex: $location.path().startsWith('/requests') ? 1 : 0,
     };
 
     init();
