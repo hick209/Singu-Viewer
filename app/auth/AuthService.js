@@ -49,13 +49,13 @@
           .then(response => {
             if (response.status == 200) {
               const result = response.data;
-              scope.auth.user = result.user;
-              scope.auth.token = result.token;
+              service.auth.user = result.user;
+              service.auth.token = result.token;
 
               // Store the info in cookies
               const data = {
-                user: scope.auth.user,
-                token: scope.auth.token,
+                user: service.auth.user,
+                token: service.auth.token,
               };
               $cookies.putObject(AUTH_COOKIE_KEY, data);
             }
@@ -63,11 +63,11 @@
               ErrorHandler.treatError(response.statusText);
             }
 
-            scope.auth.working = false;
+            service.auth.working = false;
           })
           .catch(error => {
             ErrorHandler.treatError(error);
-            scope.auth.working = false;
+            service.auth.working = false;
           });
 
       // const response = {
@@ -123,12 +123,12 @@
     function logout() {
       $cookies.remove(AUTH_COOKIE_KEY);
 
-      scope.auth.user = {
+      service.auth.user = {
         _id: null,
         name: 'Singu Viewer',
         email: null,
       };
-      scope.auth.token = null;
+      service.auth.token = null;
     }
   }
 })();
