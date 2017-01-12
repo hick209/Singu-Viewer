@@ -78,26 +78,38 @@
       today.day(diff);
       const dayIndex = today.day();
 
-      if (!diff) key = 'Hoje';
-      else if (diff == -1) key = 'Amanhã';
-      else if (diff == 1) key = 'Ontem';
+      if (!diff) {
+        key = md.format(`[Hoje, dia] D`);
+      }
+      else if (diff == -1) {
+        key = md.format(`[Amanhã, dia] D`);
+      }
+      // else if (diff == -2) {
+      //   key = md.format(`[Depois de amanhã, dia] D`);
+      // }
+      else if (diff == -1) {
+        key = md.format(`[Ontem, dia] D`);
+      }
+      // else if (diff == -2) {
+      //   key = md.format(`[Anteontem, dia] D`);
+      // }
       else if (Math.abs(diff) <= 6) {
         if (diff < 0) {
           if (dayIndex == 0 || dayIndex == 6) {
             // Sábado e domingo
-            key = `Próximo ${days[dayIndex]}`;
+            key = md.format(`[Próximo ${days[dayIndex].toLowerCase()}, dia] D`);
           }
           else {
-            key = `Próxima ${days[dayIndex]}`;
+            key = md.format(`[Próxima ${days[dayIndex].toLowerCase()}, dia] D`);
           }
         }
         else {
           if (dayIndex == 0 || dayIndex == 6) {
             // Sábado e domingo
-            key = `Último ${days[dayIndex]}`;
+            key = md.format(`[Último ${days[dayIndex].toLowerCase()}, dia] D`);
           }
           else {
-            key = `Última ${days[dayIndex]}`;
+            key = md.format(`[Última ${days[dayIndex].toLowerCase()}, dia] D`);
           }
         }
       }
