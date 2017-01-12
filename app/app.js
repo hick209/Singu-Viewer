@@ -33,6 +33,9 @@
     // };
 
     $scope.toolbar = {};
+    $scope.tabs = {
+      selectedIndex: 0,
+    };
 
     init();
 
