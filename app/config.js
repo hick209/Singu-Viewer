@@ -34,16 +34,16 @@
 
     // Configure routes
     $routeProvider
-        // .when('/', {
-        //   templateUrl:'app/main/main.html',
+        .when('/agenda', {
         //   controllerAs: 'viewModel',
         //   controller: 'MainController',
-        // })
-        // .when('/users/:id?/:info?', {
+          template:'Agenda',
+        })
+        .when('/requests', {
         //   controller:'UsersController',
         //   controllerAs: 'viewModel',
-        //   templateUrl:'app/users/users.html',
-        // })
+          template:'Pedidos',
+        })
         // .when('/dev/:id?', {
         //   controller:'DevsController',
         //   controllerAs: 'viewModel',
@@ -78,7 +78,7 @@
         //   templateUrl:'app/scripts/scripts.html',
         // })
         .otherwise({
-          redirectTo:'/'
+          redirectTo:'/agenda'
         });
   }
 })();

@@ -34,13 +34,24 @@
 
     $scope.toolbar = {};
     $scope.tabs = {
-      selectedIndex: 0,
+      selectedIndex: $location.path.startsWith('/requests') ? 1 : 0,
     };
 
     init();
 
     function init() {
       AuthService($scope, () => { console.info(`Logged in as ${$scope.auth.user.name}`) });
+
+      $scope.$watch('tabs.selectedIndex', (current, old) => {
+        switch (current) {
+          case 0:
+            $location.url("/agenda");
+            break;
+          case 1:
+            $location.url("/requests");
+            break;
+        }
+      });
     }
   }
 })();

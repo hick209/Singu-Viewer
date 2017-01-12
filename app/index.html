@@ -63,18 +63,22 @@
 					</div>
 
 					<md-tabs
+						class="md-primary"
 						md-dynamic-height
-						md-border-bottom
 						md-selected="tabs.selectedIndex">
 
-						<md-tab label="Minha agenda"></md-tab>
-						<md-tab label="Novos pedidos"></md-tab>
+						<md-tab>
+							<md-tab-label>Minha agenda</md-tab-label>
+						</md-tab>
+						<md-tab>
+							<md-tab-label>Novos pedidos</md-tab-label>
+						</md-tab>
 					</md-tabs>
 				</md-toolbar>
 
-				<!-- <div ng-view flex> -->
+				<div ng-view flex>
 					<!-- Main content will go here -->
-				<!-- </div> -->
+				</div>
 			</main>
 		</div>
 
