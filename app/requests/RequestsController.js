@@ -1,14 +1,17 @@
 (function() {
   "use strict";
-  angular.module('singu-viewer').controller('RequestsController', [
-    '$q',
-    'RequestsService',
-    'ErrorHandler',
-    RequestsController
-  ]);
+  angular.module('singu-viewer')
+      .controller('RequestsController', [
+        '$q',
+        'moment',
+        'RequestsService',
+        'ErrorHandler',
+        RequestsController
+      ]);
 
   function RequestsController(
     $q,
+    moment,
     RequestsService,
     ErrorHandler
   ) {

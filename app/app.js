@@ -6,6 +6,7 @@
     'ngMessages',
     'ngMaterial',
     'ngMap',
+    'angularMoment',
     'md.data.table',
   ]);
 
