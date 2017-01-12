@@ -2,6 +2,7 @@
   "use strict";
   angular.module('singu-viewer', [
     'ngRoute',
+    'ngCookies',
     'ngMessages',
     'ngMaterial',
     'ngMap',

@@ -3,23 +3,35 @@
   angular.module('singu-viewer')
       .service('AuthService', [
         '$http',
+        '$cookies',
         'ErrorHandler',
         AuthService
       ]);
 
-  function AuthService($http, ErrorHandler) {
+  function AuthService(
+    $http,
+    $cookies,
+    ErrorHandler
+  ) {
+    const AUTH_COOKIE_KEY = 'singu.auth';
+
     return setup;
 
     function setup(scope, refreshAction) {
-      scope.auth = {
+      const cookieData = $cookies.getObject(AUTH_COOKIE_KEY) || {
         user: {
           _id: null,
           name: 'Singu Viewer',
           email: null,
-          token: null
         },
+        token: null,
+      };
+
+      scope.auth = {
+        user: cookieData.user,
+        token: cookieData.token,
         working: false,
-        signedIn: false,
+        isSignedIn: () => { return !!scope.auth.token && !!scope.auth.user },
         login: login,
         logout: logout,
       };
@@ -36,7 +48,12 @@
                 scope.auth.user = result.user;
                 scope.auth.token = result.token;
 
-                scope.auth.signedIn = true;
+                // Store the info in cookies
+                const data = {
+                  user: scope.auth.user,
+                  token: scope.auth.token,
+                };
+                $cookies.putObject(AUTH_COOKIE_KEY, data);
               }
               else {
                 ErrorHandler.treatError(response.statusText);
@@ -101,20 +118,14 @@
       }
 
       function logout() {
-        // TODO
-        // workingPromise(firebase.auth().signOut());
+        $cookies.remove(AUTH_COOKIE_KEY);
 
-        scope.auth.signedIn = false;
-      }
-
-      function workingPromise(promise) {
-        scope.auth.working = true;
-        promise.then((result) => {
-          scope.auth.working = false;
-        }).catch((error) => {
-          ErrorHandler.treatError(error);
-          scope.auth.working = false;
-        });
+        scope.auth.user = {
+          _id: null,
+          name: 'Singu Viewer',
+          email: null,
+        };
+        scope.auth.token = null;
       }
     }
   }
