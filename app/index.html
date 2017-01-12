@@ -30,60 +30,58 @@
 		ng-cloak
 		ng-controller="AppController">
 
-		<div
-			layout="row"
-			layout-fill
+		<main
+			layout="column"
 			ng-show="auth.isSignedIn()">
-			<main layout="column" flex>
-				<md-toolbar md-whiteframe="4">
-					<div class="md-toolbar-tools">
-						<span class="md-headline" layout-margin>
-							<h2>{{ auth.user.name }}</h2>
-						</span>
-						<div flex><!-- Fill up the white space --></div>
-					  <md-menu>
-							<md-button
-								class="md-icon-button"
-								tabindex="2"
-								aria-label="More"
-								ng-click="$mdOpenMenu($event)"
-								md-menu-origin>
-								<md-icon
-									class="md-24"
-									tabindex="-1"
-									md-font-src="material-icons">
-									more_vert
-								</md-icon>
-							</md-button>
-					    <md-menu-content>
-					      <md-menu-item>
-									<md-button ng-click="auth.logout()">
-					          Logout
-					        </md-button>
-					    	</md-menu-item>
-							</md-menu-content>
-					  </md-menu>
-					</div>
-
-					<md-tabs
-						class="md-primary"
-						md-dynamic-height
-						md-selected="tabs.selectedIndex">
-
-						<md-tab>
-							<md-tab-label>Minha agenda</md-tab-label>
-						</md-tab>
-						<md-tab>
-							<md-tab-label>Novos pedidos</md-tab-label>
-						</md-tab>
-					</md-tabs>
-				</md-toolbar>
-
-				<div ng-view flex>
-					<!-- Main content will go here -->
+			<md-toolbar md-whiteframe="4">
+				<div class="md-toolbar-tools">
+					<span class="md-headline" layout-margin>
+						<h2>{{ auth.user.name }}</h2>
+					</span>
+					<div flex><!-- Fill up the white space --></div>
+				  <md-menu>
+						<md-button
+							class="md-icon-button"
+							tabindex="2"
+							aria-label="More"
+							ng-click="$mdOpenMenu($event)"
+							md-menu-origin>
+							<md-icon
+								class="md-24"
+								tabindex="-1"
+								md-font-src="material-icons">
+								more_vert
+							</md-icon>
+						</md-button>
+				    <md-menu-content>
+				      <md-menu-item>
+								<md-button ng-click="auth.logout()">
+				          Logout
+				        </md-button>
+				    	</md-menu-item>
+						</md-menu-content>
+				  </md-menu>
 				</div>
-			</main>
-		</div>
+
+				<md-tabs
+					class="md-primary"
+
+					md-stretch-tabs
+					md-selected="tabs.selectedIndex">
+
+					<md-tab>
+						<md-tab-label>Minha agenda</md-tab-label>
+					</md-tab>
+					<md-tab>
+						<md-tab-label>Novos pedidos</md-tab-label>
+					</md-tab>
+				</md-tabs>
+			</md-toolbar>
+
+			<div ng-view flex>
+				<!-- Main content will go here -->
+			</div>
+		</main>
 
 		<!-- Auth panel -->
 		<div
@@ -180,5 +178,6 @@
 		<script type="text/javascript" src="app/config.js"></script>
 		<script type="text/javascript" src="app/common/ErrorHandler.js"></script>
 		<script type="text/javascript" src="app/auth/AuthService.js"></script>
+		<script type="text/javascript" src="app/agenda/AgendaController.js"></script>
 	</body>
 </html>

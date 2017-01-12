@@ -35,9 +35,9 @@
     // Configure routes
     $routeProvider
         .when('/agenda', {
-        //   controllerAs: 'viewModel',
-        //   controller: 'MainController',
-          template:'Agenda',
+          controller: 'AgendaController',
+          controllerAs: 'viewModel',
+          templateUrl:'app/agenda/agenda.html',
         })
         .when('/requests', {
         //   controller:'UsersController',
