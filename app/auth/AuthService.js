@@ -42,7 +42,7 @@
 
         scope.auth.working = true;
         $http.post(loginPostUrl, payload)
-            .then((response) => {
+            .then(response => {
               if (response.status == 200) {
                 const result = response.data;
                 scope.auth.user = result.user;
@@ -62,7 +62,7 @@
               scope.auth.working = false;
               refreshAction();
             })
-            .catch((error) => {
+            .catch(error => {
               ErrorHandler.treatError(error);
               scope.auth.working = false;
             });

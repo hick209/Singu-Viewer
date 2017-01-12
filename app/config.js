@@ -40,9 +40,9 @@
           templateUrl:'app/agenda/agenda.html',
         })
         .when('/requests', {
-        //   controller:'UsersController',
-        //   controllerAs: 'viewModel',
-          template:'Pedidos',
+          controller: 'RequestsController',
+          controllerAs: 'viewModel',
+          templateUrl:'app/requests/requests.html',
         })
         // .when('/dev/:id?', {
         //   controller:'DevsController',
