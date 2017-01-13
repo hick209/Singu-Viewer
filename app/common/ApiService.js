@@ -1,17 +1,22 @@
 (function() {
   "use strict";
   angular.module('singu-viewer')
-    .service('RequestsService', [
+    .service('ApiService', [
       '$http',
-      RequestsService
+      ApiService
     ]);
 
-  function RequestsService(
+  function ApiService(
     $http
   ) {
     return {
-      get: getRequests,
+      getAgenda: getAgenda,
+      getRequests: getRequests,
     };
+
+    function getAgenda(token) {
+      return $http.get(`/api/agenda?token=${token}`);
+    }
 
     function getRequests(token) {
       return $http.get(`/api/requests?token=${token}`);

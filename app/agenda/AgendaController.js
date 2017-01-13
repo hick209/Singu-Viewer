@@ -1,61 +1,111 @@
 (function() {
   "use strict";
-  angular.module('singu-viewer').controller('AgendaController', [
-    '$q',
-    AgendaController
-  ]);
+  angular.module('singu-viewer')
+      .controller('AgendaController', [
+        '$q',
+        '$window',
+        'moment',
+        'AuthService',
+        'ApiService',
+        'ErrorHandler',
+        AgendaController
+      ]);
 
   function AgendaController(
-    $q
+    $q,
+    $window,
+    moment,
+    AuthService,
+    ApiService,
+    ErrorHandler
   ) {
     const viewModel = this;
 
     viewModel.loading = false;
     viewModel.loadingMessage = '';
 
-    viewModel.sections = [
-      {
-        date: new Date(),
-        items: [
-          {
-            name: "item 1",
-          },
-          {
-            name: "item 2",
-          },
-        ]
-      },
-    ];
+    viewModel.sections = [];
+    viewModel.refresh = loadRequests;
+    viewModel.openAddressOnGoogleMaps = openAddressOnGoogleMaps;
 
     init();
 
     function init() {
-      // Preload some data
+      loadRequests();
+    }
+
+    function openAddressOnGoogleMaps(item) {
+      $window.open(`https://www.google.com/maps/?q=${item.address.place}`);
+    }
+
+    function loadRequests() {
       viewModel.loading = true;
-      $q.when()
-          // .then(loadUsers)
-          // .then(loadRoutes)
-          // .then(loadCollisions)
-          // .then(loadDevs)
-          .then(() => {
+
+      const token = AuthService.token;
+      ApiService.getAgenda(token)
+          .then(response => {
+            if (response.status == 200) {
+              const result = response.data;
+              viewModel.sections = parseSections(result);
+            }
+            else {
+              ErrorHandler.treatError(response.statusText);
+            }
+            viewModel.loading = false;
+          })
+          .catch(error => {
+            ErrorHandler.treatError(error);
             viewModel.loading = false;
           });
     }
 
-    function loadUsers() {
-      return UserFactory.all().then((result) => viewModel.loadingMessage += ` ${result.count} users\n`);
+    function parseSections(result) {
+      const days = {};
+      for (const item of result) {
+        const key = moment(item.date).startOf('day');
+        const group = (days[key] || []);
+        group.push(item);
+
+        days[key] = group;
+      }
+
+      const sections = [];
+      // TODO sort the array
+
+      for (const key of Object.keys(days)) {
+        const section = {
+          date: key,
+          items: parseItems(days[key]),
+        };
+
+        sections.push(section);
+      }
+
+      return sections;
     }
 
-    function loadDevs() {
-      return DevFactory.all().then((result) => viewModel.loadingMessage += ` ${result.count} devs\n`);
-    }
+    function parseItems(data) {
+      const items = [];
+      for (const item of data) {
+        items.push({
+          service: item.services[0].name['pt-BR'],
+          date: item.date,
+          code: item.shortCode,
+          address: {
+            place: `${item.address.place}, ${item.address.streetNumber}, ${item.address.neighbor}`,
+            reference: item.address.referencePoint,
+            lat: item.address.lat,
+            lng: item.address.lng,
+          },
+          client: {
+            name: item.user.name,
+            email: item.user.email,
+            phone: item.user.phone,
+          },
+        });
+      }
 
-    function loadRoutes() {
-      return RouteFactory.all().then((result) => viewModel.loadingMessage += ` ${result.count} routes\n`);
-    }
-
-    function loadCollisions() {
-      return CollisionFactory.all().then((result) => viewModel.loadingMessage += ` ${result.count} collisions\n`);
+      return items;
     }
   }
 })();

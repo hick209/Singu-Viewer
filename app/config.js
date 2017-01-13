@@ -42,41 +42,8 @@
         .when('/requests', {
           controller: 'RequestsController',
           controllerAs: 'viewModel',
-          templateUrl:'app/requests/requests.html',
+          templateUrl:'app/agenda/agenda.html',
         })
-        // .when('/dev/:id?', {
-        //   controller:'DevsController',
-        //   controllerAs: 'viewModel',
-        //   templateUrl:'app/dev/dev.html',
-        // })
-        // .when('/routes/:id?', {
-        //   controller:'RoutesController',
-        //   controllerAs: 'viewModel',
-        //   templateUrl:'app/routes/routes.html',
-        // })
-        // .when('/routes-dev/:id?', {
-        //   controller:'RoutesController',
-        //   controllerAs: 'viewModel',
-        //   templateUrl:'app/routes/routes.html',
-        // })
-        // .when('/collisions/:id?', {
-        //   controller:'CollisionsController',
-        //   controllerAs: 'viewModel',
-        //   templateUrl:'app/collisions/collisions.html',
-        // })
-        // .when('/collisions-dev/:id?', {
-        //   controller:'CollisionsController',
-        //   controllerAs: 'viewModel',
-        //   templateUrl:'app/collisions/collisions.html',
-        // })
-        // .when('/configs', {
-        //   redirectTo:'/',
-        // })
-        // .when('/scripts', {
-        //   controller:'ScriptsController',
-        //   controllerAs: 'viewModel',
-        //   templateUrl:'app/scripts/scripts.html',
-        // })
         .otherwise({
           redirectTo:'/agenda'
         });

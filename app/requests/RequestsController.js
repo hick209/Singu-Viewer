@@ -6,7 +6,7 @@
         '$window',
         'moment',
         'AuthService',
-        'RequestsService',
+        'ApiService',
         'ErrorHandler',
         RequestsController
       ]);
@@ -16,7 +16,7 @@
     $window,
     moment,
     AuthService,
-    RequestsService,
+    ApiService,
     ErrorHandler
   ) {
     const viewModel = this;
@@ -42,7 +42,7 @@
       viewModel.loading = true;
 
       const token = AuthService.token;
-      RequestsService.get(token)
+      ApiService.getRequests(token)
           .then(response => {
             if (response.status == 200) {
               const result = response.data;
