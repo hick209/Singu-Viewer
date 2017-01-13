@@ -66,12 +66,12 @@
 
   function amCalendarDateFilter(moment) {
     return function(dt) {
-      const md = moment(dt);
+      const md = moment(dt).startOf('day');
       var key = '';
 
-      if (!dt || !md || (md + '').toLowerCase() == 'invalid date') return '';
+      if (!dt || !md || (md + '').toLowerCase() === 'invalid date') return '';
 
-      const today = moment();
+      const today = moment().startOf('day');
       const diff = today.diff(md, 'days');
 
       const days = 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_');
