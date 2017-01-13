@@ -3,6 +3,7 @@
   angular.module('singu-viewer')
       .controller('RequestsController', [
         '$q',
+        '$window',
         'moment',
         'AuthService',
         'RequestsService',
@@ -12,6 +13,7 @@
 
   function RequestsController(
     $q,
+    $window,
     moment,
     AuthService,
     RequestsService,
@@ -23,11 +25,20 @@
     viewModel.loadingMessage = '';
 
     viewModel.sections = [];
+    viewModel.refresh = loadRequests;
+    viewModel.openAddressOnGoogleMaps = openAddressOnGoogleMaps;
 
     init();
 
     function init() {
       loadRequests();
+    }
+
+    function openAddressOnGoogleMaps(item) {
+      console.log(item);
+      console.log(item.address);
+      console.log(item.address.lat);
+      $window.open(`https://www.google.com/maps/?q=${item.address.place}`);
     }
 
     function loadRequests() {
@@ -88,8 +99,8 @@
           address: {
             place: `${item.address.place}, ${item.address.streetNumber}`,
             reference: item.address.referencePoint,
-            lat: item.lat,
-            lng: item.lng,
+            lat: item.address.lat,
+            lng: item.address.lng,
           },
           client: {
             name: item.user.name,

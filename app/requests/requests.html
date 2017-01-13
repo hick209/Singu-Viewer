@@ -7,13 +7,22 @@
         <md-context
           layout-padding
           layout="column">
-          <span> {{ item.service }} </span>
-          <span> {{ item.code }} </span>
-          <span> {{ item.date | amUtc | amLocal | amDateFormat : 'HH:mm' }} </span>
-
-          <span> {{ item.client.name }} </span>
-          <span> {{ item.address.place }} </span>
-          <span> {{ item.address.reference }} </span>
+          <md-card-title>
+            <md-card-title-text>
+              <span class="md-headline">{{ item.code }} - {{ item.service }}</span>
+              <span class="md-caption">{{ item.date | amUtc | amLocal | amDateFormat : '[Às] H:mm' }}</span>
+            </md-card-title-text>
+          </md-card-title>
+          <md-card-content layout="column">
+            <span class="md-subhead md-padding"><strong>{{ item.client.name }}</strong></span>
+            <div layout="column">
+              <span class="md-body2 md-padding">{{ item.address.place }}</span>
+              <span class="md-caption md-padding">{{ item.address.reference }}</span>
+            </div>
+          </md-card-content>
+          <md-card-actions layout="row" layout-align="end center">
+            <md-button class="md-accent" ng-click="viewModel.openAddressOnGoogleMaps(item)">Open on maps</md-button>
+          </md-card-actions>
         </md-context>
         <md-divider inset></md-divider>
       </md-item>
