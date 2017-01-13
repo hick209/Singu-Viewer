@@ -14,10 +14,10 @@
             </md-card-title-text>
           </md-card-title>
           <md-card-content layout="column">
-            <span class="md-subhead md-padding"><strong>{{ item.client.name }}</strong></span>
-            <div layout="column">
-              <span class="md-body2 md-padding">{{ item.address.place }}</span>
-              <span class="md-caption md-padding" ng-if="item.address.reference || item.address.complement">
+            <span class="md-subhead" layout-padding><strong>{{ item.client.name }}</strong></span>
+            <div layout="column" layout-padding>
+              <span class="md-body2">{{ item.address.place }}</span>
+              <span class="md-caption" ng-if="item.address.reference || item.address.complement">
                 {{ item.address.reference }} {{ item.address.reference && item.address.complement ? '-' : '' }} {{ item.address.complement }}
               </span>
             </div>
