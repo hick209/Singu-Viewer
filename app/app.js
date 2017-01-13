@@ -75,8 +75,7 @@
       const diff = today.diff(md, 'days');
 
       const days = 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_');
-      today.day(diff);
-      const dayIndex = today.day();
+      const dayIndex = md.day();
 
       if (!diff) {
         key = md.format(`[Hoje, dia] D`);
