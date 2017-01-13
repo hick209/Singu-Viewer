@@ -29,5 +29,7 @@
     </md-card>
   </section>
 
-  <md-progress-circular ng-if="viewModel.loading"></md-progress-circular>
+  <div flex layout="row" layout-align="center center" ng-if="viewModel.loading">
+    <md-progress-circular></md-progress-circular>
+  </div>
 </md-content>
