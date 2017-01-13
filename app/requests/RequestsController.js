@@ -94,6 +94,7 @@
           address: {
             place: `${item.address.place}, ${item.address.streetNumber}, ${item.address.neighbor}`,
             reference: item.address.referencePoint,
+            complement: item.address.complement,
             lat: item.address.lat,
             lng: item.address.lng,
           },

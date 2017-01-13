@@ -26,12 +26,32 @@
 
     viewModel.sections = [];
     viewModel.refresh = loadRequests;
+    viewModel.agenda = true;
     viewModel.openAddressOnGoogleMaps = openAddressOnGoogleMaps;
+    viewModel.addToGoogleCalendar = addToGoogleCalendar;
 
     init();
 
     function init() {
       loadRequests();
+    }
+
+    function addToGoogleCalendar(item) {
+      const eventTitle = `${item.code} ${item.client.name} - ${item.service}`;
+      const dates = `${formatDateToGoogleCalendate(item.date)}/${formatDateToGoogleCalendate(moment(item.date).add(2, 'hour'))}`;
+      const location = `${item.address.place}`;
+      var details;
+      if (item.address.complement && item.address.reference) details = `Complemento: ${item.address.complement} --- Referência: ${item.address.reference}`;
+      else if (item.address.complement) details = `Complemento: ${item.address.complement}`;
+      else if (item.address.reference) details = `Referência: ${item.address.reference}`;
+      else details = '';
+
+      const link = `https://www.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`
+      $window.open(link);
+    }
+
+    function formatDateToGoogleCalendate(date) {
+      return moment(date).zone('-00:00').format('YYYYMMDD[T]HHmm00[Z]')
     }
 
     function openAddressOnGoogleMaps(item) {
@@ -94,6 +114,7 @@
           address: {
             place: `${item.address.place}, ${item.address.streetNumber}, ${item.address.neighbor}`,
             reference: item.address.referencePoint,
+            complement: item.address.complement,
             lat: item.address.lat,
             lng: item.address.lng,
           },
