@@ -46,12 +46,12 @@
       else if (item.address.reference) details = `Referência: ${item.address.reference}`;
       else details = '';
 
-      const link = `https://www.google.com/calendar/render?action=TEMPLATE&text=${eventTitle}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`
+      const link = `https://calendar.google.com/calendar/gp#~calendar:view=e&bm=1&action=TEMPLATE&text=${eventTitle}&dates=${dates}&details=${details}&location=${location}&sf=true&output=xml`
       $window.open(link);
     }
 
     function formatDateToGoogleCalendate(date) {
-      return moment(date).zone('-00:00').format('YYYYMMDD[T]HHmm00[Z]')
+      return moment(date).toISOString().replace(/-|:|\.\d\d\d/g,'');
     }
 
     function openAddressOnGoogleMaps(item) {
