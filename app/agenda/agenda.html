@@ -17,8 +17,8 @@
             <span class="md-subhead md-padding"><strong>{{ item.client.name }}</strong></span>
             <div layout="column">
               <span class="md-body2 md-padding">{{ item.address.place }}</span>
-              <span class="md-caption md-padding" ng-if="item.address.reference">
-                {{ item.address.reference }}
+              <span class="md-caption md-padding" ng-if="item.address.reference || item.address.complement">
+                {{ item.address.reference }} {{ item.address.reference && item.address.complement ? '-' : '' }} {{ item.address.complement }}
               </span>
             </div>
           </md-card-content>
