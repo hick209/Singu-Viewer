@@ -1,7 +1,7 @@
 <md-content layout-padding layout="column">
   <!-- TODO, check out for expandable list http://embed.plnkr.co/NMvyXBL3FYf2b2XsAlz9 -->
   <section ng-repeat="section in viewModel.sections">
-    <md-subheader>{{ section.date | amUtc | amLocal | amCalendarDate : null : 'days' }}</md-subheader>
+    <md-subheader>{{ section.date | amCalendarDate : null : 'days' }}</md-subheader>
     <md-card>
       <md-item ng-repeat="item in section.items">
         <md-context
@@ -10,7 +10,7 @@
           <md-card-title>
             <md-card-title-text>
               <span class="md-headline">{{ item.code }} - {{ item.service }}</span>
-              <span class="md-caption">{{ item.date | amUtc | amLocal | amDateFormat : '[Às] H:mm' }}</span>
+              <span class="md-caption">{{ item.date | amDateFormat : '[Às] H:mm' }}</span>
             </md-card-title-text>
           </md-card-title>
           <md-card-content layout="column">

@@ -35,9 +35,6 @@
     }
 
     function openAddressOnGoogleMaps(item) {
-      console.log(item);
-      console.log(item.address);
-      console.log(item.address.lat);
       $window.open(`https://www.google.com/maps/?q=${item.address.place}`);
     }
 
@@ -90,14 +87,12 @@
     function parseItems(data) {
       const items = [];
       for (const item of data) {
-        console.log(item);
-
         items.push({
           service: item.services[0].name['pt-BR'],
           date: item.date,
           code: item.shortCode,
           address: {
-            place: `${item.address.place}, ${item.address.streetNumber}`,
+            place: `${item.address.place}, ${item.address.streetNumber}, ${item.address.neighbor}`,
             reference: item.address.referencePoint,
             lat: item.address.lat,
             lng: item.address.lng,
