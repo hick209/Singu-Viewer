@@ -37,7 +37,7 @@
     }
 
     function addToGoogleCalendar(item) {
-      const eventTitle = `${item.code} ${item.client.name} - ${item.service}`;
+      const eventTitle = `${item.client.name} - ${item.service}`;
       const dates = `${formatDateToGoogleCalendate(item.date)}/${formatDateToGoogleCalendate(moment(item.date).add(2, 'hour'))}`;
       const location = `${item.address.place}`;
       var details;
