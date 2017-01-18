@@ -74,46 +74,38 @@
       const today = moment().startOf('day');
       const diff = today.diff(md, 'days');
 
-      const days = 'Domingo_Segunda-feira_Terça-feira_Quarta-feira_Quinta-feira_Sexta-feira_Sábado'.split('_');
-      const dayIndex = md.day();
-
       if (!diff) {
-        key = md.format(`[Hoje, dia] D`);
+        key = md.format(`[Hoje, dia] D [de] MMMM`);
       }
       else if (diff == -1) {
-        key = md.format(`[Amanhã, dia] D`);
+        key = md.format(`[Amanhã, dia] D [de] MMMM`);
       }
       // else if (diff == -2) {
       //   key = md.format(`[Depois de amanhã, dia] D`);
       // }
       else if (diff == -1) {
-        key = md.format(`[Ontem, dia] D`);
+        key = md.format(`[Ontem, dia] D [de] MMMM`);
       }
       // else if (diff == -2) {
       //   key = md.format(`[Anteontem, dia] D`);
       // }
       else if (Math.abs(diff) <= 6) {
         if (diff < 0) {
-          if (dayIndex == 0 || dayIndex == 6) {
-            // Sábado e domingo
-            key = md.format(`[Próximo ${days[dayIndex].toLowerCase()}, dia] D`);
-          }
-          else {
-            key = md.format(`[Próxima ${days[dayIndex].toLowerCase()}, dia] D`);
-          }
+          key = md.format('dddd, LL');
         }
         else {
+          const dayIndex = md.day();
           if (dayIndex == 0 || dayIndex == 6) {
             // Sábado e domingo
-            key = md.format(`[Último ${days[dayIndex].toLowerCase()}, dia] D`);
+            key = md.format(`[Último] dddd[, dia] D [de] MMMM`);
           }
           else {
-            key = md.format(`[Última ${days[dayIndex].toLowerCase()}, dia] D`);
+            key = md.format(`[Última] dddd[, dia] D [de] MMMM`);
           }
         }
       }
       else {
-        key = md.format(`[${days[dayIndex]}], D [de] MMM [de] YYYY`)
+        key = md.format(`dddd, LL`)
       }
 
       return key;
