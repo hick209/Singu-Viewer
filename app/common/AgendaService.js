@@ -2,6 +2,7 @@
   "use strict";
   angular.module('singu-viewer')
       .service('AgendaService', [
+        '$q',
         '$rootScope',
         '$window',
         'moment',
@@ -12,6 +13,7 @@
       ]);
 
   function AgendaService(
+    $q,
     $rootScope,
     $window,
     moment,
@@ -25,7 +27,9 @@
 
     return service;
 
-    function configureAgenda(controller, apiCall) {
+    function configureAgenda($scope, controller, apiCall) {
+      $scope.auth = AuthService;
+
       controller.loading = false;
       controller.sections = [];
       controller.refresh = loadRequests;
@@ -34,9 +38,15 @@
 
       $rootScope.refresh = loadRequests;
 
+      $scope.$watch('auth.isSignedIn()', (isSignedIn, wasSignedIn) => {
+        if (isSignedIn) controller.refresh();
+      });
+
       return controller;
 
       function loadRequests() {
+        if (!AuthService.isSignedIn()) return $q.when();
+
         controller.loading = true;
 
         const token = AuthService.token;

@@ -32,11 +32,6 @@
   ) {
     const viewModel = this;
 
-    // const apiCallGetUrl = 'https://api.singu.com.br/v2/artist/free-schedules';
-    // const headers = {
-    //   "Authorization": `Bearer ${user.token}`
-    // };
-
     viewModel.toolbar = {
       refresh: refresh,
     };
@@ -64,11 +59,7 @@
     }
 
     function refresh() {
-      viewModel.loading = true;
-      $rootScope.refresh()
-        .then(() => {
-          viewModel.loading = false
-        });
+      $rootScope.refresh();
     }
   }
 

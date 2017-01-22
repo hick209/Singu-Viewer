@@ -2,18 +2,20 @@
   "use strict";
   angular.module('singu-viewer')
       .controller('RequestsController', [
+        '$scope',
         'AgendaService',
         'ApiService',
         RequestsController
       ]);
 
   function RequestsController(
+    $scope,
     AgendaService,
     ApiService
   ) {
     const viewModel = this;
 
-    AgendaService.configureAgenda(viewModel, ApiService.getRequests)
+    AgendaService.configureAgenda($scope, viewModel, ApiService.getRequests)
 
     init();
 
