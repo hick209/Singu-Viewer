@@ -7,6 +7,10 @@ md-toolbar.md-table-toolbar .md-toolbar-tools md-icon {
   color: rgba(255,255,255,0.87);
 }
 
+.md-tab {
+  padding: 12px 12px;
+}
+
 /* This is a hack to make possible for a Toast to be centered
  * See https://github.com/angular/material/issues/1773#issuecomment-242980273 */
 md-toast.md-center {

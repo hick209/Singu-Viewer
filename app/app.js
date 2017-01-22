@@ -37,8 +37,8 @@
     };
     viewModel.tabs = {
       data: [
-        { label: 'Agenda', },
-        { label: 'Novos pedidos', },
+        { label: 'Minha Agenda', },
+        { label: 'Novos Pedidos', },
         { label: 'Histórico', },
       ],
     };
