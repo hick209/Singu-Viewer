@@ -36,8 +36,21 @@
       refresh: refresh,
     };
     viewModel.tabs = {
-      selectedIndex: $location.path().startsWith('/requests') ? 1 : 0,
+      data: [
+        { label: 'Agenda', },
+        { label: 'Novos pedidos', },
+        { label: 'Histórico', },
+      ],
     };
+    if ($location.path().startsWith('/history')) {
+      viewModel.tabs.selectedIndex = 2;
+    }
+    else if ($location.path().startsWith('/requests')) {
+      viewModel.tabs.selectedIndex = 1;
+    }
+    else {
+      viewModel.tabs.selectedIndex = 0;
+    }
 
     init();
 
@@ -57,6 +70,9 @@
             break;
           case 1:
             $location.url("/requests");
+            break;
+          case 2:
+            $location.url("/history");
             break;
         }
       });

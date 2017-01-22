@@ -11,11 +11,16 @@
   ) {
     return {
       getAgenda: getAgenda,
+      getHistory: getHistory,
       getRequests: getRequests,
     };
 
     function getAgenda(token) {
       return $http.get(`/api/agenda?token=${token}`);
+    }
+
+    function getHistory(token) {
+      return $http.get(`/api/history?token=${token}`);
     }
 
     function getRequests(token) {

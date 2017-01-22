@@ -39,6 +39,11 @@
           controllerAs: 'viewModel',
           templateUrl:'app/agenda/agenda.html',
         })
+        .when('/history', {
+          controller: 'AgendaHistoryController',
+          controllerAs: 'viewModel',
+          templateUrl:'app/agenda/agenda.html',
+        })
         .when('/requests', {
           controller: 'RequestsController',
           controllerAs: 'viewModel',

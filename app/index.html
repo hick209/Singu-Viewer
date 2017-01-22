@@ -109,11 +109,8 @@
 					class="md-primary"
 					md-stretch-tabs
 					md-selected="viewModel.tabs.selectedIndex">
-					<md-tab>
-						<md-tab-label>Minha agenda</md-tab-label>
-					</md-tab>
-					<md-tab>
-						<md-tab-label>Novos pedidos</md-tab-label>
+					<md-tab ng-repeat="tab in viewModel.tabs.data">
+						<md-tab-label>{{ tab.label }}</md-tab-label>
 					</md-tab>
 				</md-tabs>
 			</md-toolbar>
@@ -226,6 +223,7 @@
 		<script type="text/javascript" src="app/common/AuthService.js"></script>
 		<script type="text/javascript" src="app/common/ErrorHandler.js"></script>
 		<script type="text/javascript" src="app/agenda/AgendaController.js"></script>
+		<script type="text/javascript" src="app/agenda/AgendaHistoryController.js"></script>
 		<script type="text/javascript" src="app/requests/RequestsController.js"></script>
 	</body>
 </html>
