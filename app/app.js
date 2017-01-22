@@ -14,6 +14,7 @@
   angular.module('singu-viewer')
       .controller('AppController', [
         '$scope',
+        '$rootScope',
         '$location',
         '$mdSidenav',
         'AuthService',
@@ -23,6 +24,7 @@
 
   function AppController(
     $scope,
+    $rootScope,
     $location,
     $mdSidenav,
     AuthService,
@@ -35,17 +37,21 @@
     //   "Authorization": `Bearer ${user.token}`
     // };
 
-    $scope.toolbar = {};
-    $scope.tabs = {
+    viewModel.toolbar = {
+      refresh: refresh,
+    };
+    viewModel.tabs = {
       selectedIndex: $location.path().startsWith('/requests') ? 1 : 0,
     };
 
     init();
 
     function init() {
+      $rootScope.refresh = () => new Promise((resolve, reject) => resolve());
+
       $scope.auth = AuthService;
 
-      $scope.$watch('tabs.selectedIndex', (current, old) => {
+      $scope.$watch('viewModel.tabs.selectedIndex', (current, old) => {
         switch (current) {
           case 0:
             $location.url("/agenda");
@@ -55,6 +61,14 @@
             break;
         }
       });
+    }
+
+    function refresh() {
+      viewModel.loading = true;
+      $rootScope.refresh()
+        .then(() => {
+          viewModel.loading = false
+        });
     }
   }
 
