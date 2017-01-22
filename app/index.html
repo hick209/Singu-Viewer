@@ -66,20 +66,21 @@
 						tabindex="1"
 						aria-label="Refresh"
 						ng-click="viewModel.toolbar.refresh()"
-						ng-hide="viewModel.loading">
+						ng-disabled="viewModel.loading">
 						<md-icon
 							class="md-24"
 							tabindex="-1"
-							md-font-src="material-icons">
+							md-font-src="material-icons"
+							ng-hide="viewModel.loading">
 							refresh
 						</md-icon>
+						<md-progress-circular
+							class="md-accent"
+							md-mode="indeterminate"
+							md-diameter="24"
+							ng-if="viewModel.loading">
+						</md-progress-circular>
 					</md-button>
-					<md-progress-circular
-						class="md-accent"
-						md-mode="indeterminate"
-						md-diameter="18"
-						ng-if="viewModel.loading">
-					</md-progress-circular>
 				  <md-menu>
 						<md-button
 							class="md-icon-button"

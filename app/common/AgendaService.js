@@ -2,6 +2,7 @@
   "use strict";
   angular.module('singu-viewer')
       .service('AgendaService', [
+        '$rootScope',
         '$window',
         'moment',
         'AuthService',
@@ -11,6 +12,7 @@
       ]);
 
   function AgendaService(
+    $rootScope,
     $window,
     moment,
     AuthService,
@@ -29,6 +31,8 @@
       controller.refresh = loadRequests;
       controller.openAddressOnGoogleMaps = openAddressOnGoogleMaps;
       controller.addToGoogleCalendar = addToGoogleCalendar;
+
+      $rootScope.refresh = loadRequests;
 
       return controller;
 
