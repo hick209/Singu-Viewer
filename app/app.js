@@ -46,6 +46,10 @@
 
       $scope.auth = AuthService;
 
+      $scope.$on('loading', (event, state) => {
+        viewModel.loading = state;
+      });
+
       $scope.$watch('viewModel.tabs.selectedIndex', (current, old) => {
         switch (current) {
           case 0:

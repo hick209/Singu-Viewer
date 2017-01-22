@@ -41,13 +41,16 @@
       $scope.$watch('auth.isSignedIn()', (isSignedIn, wasSignedIn) => {
         if (isSignedIn) controller.refresh();
       });
+      $scope.$on('loading', (event, state) => {
+        controller.loading = state;
+      });
 
       return controller;
 
       function loadRequests() {
         if (!AuthService.isSignedIn()) return $q.when();
 
-        controller.loading = true;
+        $rootScope.$broadcast('loading', true);
 
         const token = AuthService.token;
         return apiCall(token)
@@ -59,11 +62,11 @@
               else {
                 ErrorHandler.treatError(response.statusText);
               }
-              controller.loading = false;
+              $rootScope.$broadcast('loading', false);
             })
             .catch(error => {
               ErrorHandler.treatError(error);
-              controller.loading = false;
+              $rootScope.$broadcast('loading', false);
             });
       }
 
