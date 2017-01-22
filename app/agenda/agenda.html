@@ -1,5 +1,9 @@
 <md-content layout-padding layout="column">
   <!-- TODO, check out for expandable list http://embed.plnkr.co/NMvyXBL3FYf2b2XsAlz9 -->
+  <div flex layout="row" layout-align="center center" ng-if="viewModel.loading">
+    <md-progress-circular></md-progress-circular>
+  </div>
+
   <section ng-repeat="section in viewModel.sections">
     <md-subheader>{{ section.date | amCalendarDate : null : 'days' }}</md-subheader>
     <md-card>
@@ -32,7 +36,23 @@
     </md-card>
   </section>
 
-  <div flex layout="row" layout-align="center center" ng-if="viewModel.loading">
-    <md-progress-circular></md-progress-circular>
-  </div>
+  <!-- Empty view -->
+  <section ng-if="viewModel.sections.length == 0 && !viewModel.loading">
+    <div
+      flex
+      layout="column"
+      layout-fill
+      layout-margin
+      layout-padding
+      layout-align="center center">
+      <md-icon
+        ng-style="{'font-size': '96px', height:'96px', width: '96px'}"
+        class="md-accent"
+        tabindex="-1"
+        md-font-src="material-icons">
+        face
+      </md-icon>
+      <span class="md-title">Nenhum pedido</span>
+    </div>
+  </section>
 </md-content>
