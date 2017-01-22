@@ -7,7 +7,8 @@
   <section ng-repeat="section in viewModel.sections">
     <md-subheader>{{ section.date | amCalendarDate : null : 'days' }}</md-subheader>
     <md-card>
-      <md-item ng-repeat="item in section.items">
+      <md-item ng-repeat="item in section.items"
+        md-colors="{{ item.cancelled ? '::{ backgroundColor: \'red-100\' }' : '' }}">
         <md-context
           layout-padding
           layout="column">
@@ -28,8 +29,8 @@
           </md-card-content>
           <md-card-actions layout="column" layout-align="end">
             <md-button class="md-accent" ng-click="viewModel.openAddressOnGoogleMaps(item)">Abrir no mapa</md-button>
-            <md-button class="md-accent" ng-if="viewModel.agenda" ng-click="viewModel.addToGoogleCalendar(item)">Adicionar na agenda</md-button>
-            <md-button class="md-primary" ng-if="viewModel.requests" ng-click="viewModel.acceptRequest($event, item)">Aceitar pedido</md-button>
+            <md-button class="md-accent" ng-if="!item.cancelled && viewModel.agenda" ng-click="viewModel.addToGoogleCalendar(item)">Adicionar na agenda</md-button>
+            <md-button class="md-primary" ng-if="!item.cancelled && viewModel.requests" ng-click="viewModel.acceptRequest($event, item)">Aceitar pedido</md-button>
           </md-card-actions>
         </md-context>
         <md-divider inset></md-divider>

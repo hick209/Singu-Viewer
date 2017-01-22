@@ -114,6 +114,7 @@
               email: item.user.email,
               phone: item.user.phone,
             },
+            cancelled: false,
           });
         }
 
