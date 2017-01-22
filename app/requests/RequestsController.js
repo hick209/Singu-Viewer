@@ -16,6 +16,7 @@
     const viewModel = this;
 
     AgendaService.configureAgenda($scope, viewModel, ApiService.getRequests)
+    viewModel.requests = true;
 
     init();
 

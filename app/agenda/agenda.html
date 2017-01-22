@@ -26,9 +26,10 @@
               </span>
             </div>
           </md-card-content>
-          <md-card-actions layout="row" layout-align="end center">
-            <md-button class="md-accent" ng-if="viewModel.agenda" ng-click="viewModel.addToGoogleCalendar(item)">Adicionar na agenda</md-button>
+          <md-card-actions layout="column" layout-align="end center">
             <md-button class="md-accent" ng-click="viewModel.openAddressOnGoogleMaps(item)">Abrir no mapa</md-button>
+            <md-button class="md-accent" ng-if="viewModel.agenda" ng-click="viewModel.addToGoogleCalendar(item)">Adicionar na agenda</md-button>
+            <md-button class="md-accent" ng-if="viewModel.requests" ng-click="viewModel.acceptRequest(item)">Aceitar pedido</md-button>
           </md-card-actions>
         </md-context>
         <md-divider inset></md-divider>
