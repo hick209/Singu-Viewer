@@ -10,10 +10,15 @@
     $http
   ) {
     return {
+      putAgenda: putAgenda,
       getAgenda: getAgenda,
       getHistory: getHistory,
       getRequests: getRequests,
     };
+
+    function putAgenda(token, itemId) {
+      return $http.put(`/api/agenda?token=${token}&id=${itemId}`);
+    }
 
     function getAgenda(token) {
       return $http.get(`/api/agenda?token=${token}`);

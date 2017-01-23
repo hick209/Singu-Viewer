@@ -52,6 +52,20 @@ app.get('/api/history', (req, response) => {
   req.pipe(newRequest).pipe(response);
 });
 
+app.put('/api/agenda', (req, response) => {
+  const token = req.query.token;
+  const id = req.query.id;
+  const headers = {
+    'Authorization': `Bearer ${token}`,
+  };
+
+  var url = 'https://api.singu.com.br/v2/artist/schedule/${id}';
+  var newRequest = request.put({uri: url, headers: headers});
+
+  req.pipe(newRequest).pipe(response);
+});
+
+
 app.get('*', (req, response) => {
   response.sendFile(path.join(__dirname, 'app/index.html'));
 });
