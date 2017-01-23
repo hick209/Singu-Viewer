@@ -99,6 +99,7 @@
         const items = [];
         for (const item of data) {
           items.push({
+            id: item._id,
             service: item.services[0].name['pt-BR'],
             date: item.date,
             code: item.shortCode,

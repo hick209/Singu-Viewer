@@ -7,6 +7,8 @@
         '$mdToast',
         'AgendaService',
         'ApiService',
+        'AuthService',
+        'ErrorHandler',
         RequestsController
       ]);
 
@@ -15,7 +17,9 @@
     $mdDialog,
     $mdToast,
     AgendaService,
-    ApiService
+    ApiService,
+    AuthService,
+    ErrorHandler
   ) {
     const viewModel = this;
 
@@ -30,7 +34,7 @@
     }
 
     function acceptRequest(event, item) {
-      if (!item) return;
+      if (!item || !item.id || !AuthService.isSignedIn()) return;
 
       const confirm = $mdDialog.confirm()
           .title(`Aceitar o pedido ${item.code}?`)
@@ -39,9 +43,21 @@
           .ok('Aceitar')
           .cancel('Cancelar');
 
-      $mdDialog.show(confirm).then(() => {
-        $mdToast.show($mdToast.simple().textContent('Em breve!'));
-      })
+      $mdDialog.show(confirm)
+        .then(() => {
+          if (!item || !item.id || !AuthService.isSignedIn()) return;
+
+          $rootScope.$broadcast('loading', true);
+          return ApiService.putAgenda(AuthService.token, item.id);
+        })
+        .then(() => {
+          $rootScope.$broadcast('loading', false);
+        })
+        .then(viewModel.refresh)
+        .catch(error => {
+          ErrorHandler.treatError(error);
+          $rootScope.$broadcast('loading', false);
+        });
     }
   }
 })();
