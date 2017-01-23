@@ -3,6 +3,7 @@
   angular.module('singu-viewer')
       .controller('RequestsController', [
         '$scope',
+        '$rootScope',
         '$mdDialog',
         '$mdToast',
         'AgendaService',
@@ -14,6 +15,7 @@
 
   function RequestsController(
     $scope,
+    $rootScope,
     $mdDialog,
     $mdToast,
     AgendaService,
