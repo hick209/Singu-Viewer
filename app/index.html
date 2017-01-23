@@ -53,9 +53,10 @@
 		ng-controller="AppController as viewModel">
 
 		<main
+			layout-fill
 			layout="column"
 			ng-show="auth.isSignedIn()">
-			<md-toolbar md-whiteframe="4">
+			<md-toolbar>
 				<div class="md-toolbar-tools">
 					<span class="md-headline" layout-margin>
 						<h2>{{ auth.user.name }}</h2>
@@ -104,20 +105,19 @@
 						</md-menu-content>
 				  </md-menu>
 				</div>
-
-				<md-tabs
-					class="md-primary"
-					md-stretch-tabs
-					md-selected="viewModel.tabs.selectedIndex">
-					<md-tab ng-repeat="tab in viewModel.tabs.data">
-						<md-tab-label>{{ tab.label }}</md-tab-label>
-					</md-tab>
-				</md-tabs>
 			</md-toolbar>
+			<md-tabs
+				class="md-primary"
+				md-stretch-tabs
+				md-selected="viewModel.tabs.selectedIndex">
+				<md-tab ng-repeat="tab in viewModel.tabs.data">
+					<md-tab-label>{{ tab.label }}</md-tab-label>
+				</md-tab>
+			</md-tabs>
 
-			<div ng-view flex>
+			<md-content ng-view flex>
 				<!-- Main content will go here -->
-			</div>
+			</md-content>
 		</main>
 
 		<!-- Auth panel -->
@@ -126,7 +126,7 @@
 			layout="column"
 			layout-fill
 			layout-align="center center"
-			ng-hide="auth.isSignedIn()">
+			ng-if="!auth.isSignedIn()">
 			<md-card md-whiteframe="24" style="min-width: 360px;">
 				<md-toolbar>
 					<div class="md-toolbar-tools">

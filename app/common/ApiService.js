@@ -17,7 +17,7 @@
     };
 
     function putAgenda(token, itemId) {
-      return $http.put(`/api/agenda?token=${token}&id=${itemId}`);
+      return $http.put(`/api/agenda?id=${itemId}&token=${token}`);
     }
 
     function getAgenda(token) {
