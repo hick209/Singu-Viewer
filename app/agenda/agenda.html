@@ -1,60 +1,64 @@
-<md-content layout-padding layout="column">
-  <!-- TODO, check out for expandable list http://embed.plnkr.co/NMvyXBL3FYf2b2XsAlz9 -->
-  <div flex layout="row" layout-align="center center" ng-if="viewModel.loading">
-    <md-progress-circular></md-progress-circular>
+<!-- TODO, check out for expandable list http://embed.plnkr.co/NMvyXBL3FYf2b2XsAlz9 -->
+<div
+  flex
+  layout="row"
+  layout-margin
+  layout-padding
+  layout-align="center center"
+  ng-if="viewModel.loading">
+  <md-progress-circular></md-progress-circular>
+</div>
+
+<section ng-repeat="section in viewModel.sections">
+  <md-subheader>{{ section.date | amDateFormat : 'LL' }}</md-subheader>
+  <md-card>
+    <md-item ng-repeat="item in section.items"
+      md-colors="{{ item.cancelled ? '::{ backgroundColor: \'red-100\' }' : '' }}">
+      <md-context
+        layout-padding
+        layout="column">
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-headline">{{ item.code }} - {{ item.service }}</span>
+            <span class="md-caption">{{ item.date | amCalendar }}</span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content layout="column">
+          <span class="md-subhead" layout-padding><strong>{{ item.client.name }}</strong></span>
+          <div layout="column" layout-padding>
+            <span class="md-body2">{{ item.address.place }}</span>
+            <span class="md-caption" ng-if="item.address.reference || item.address.complement">
+              {{ item.address.reference }} {{ item.address.reference && item.address.complement ? '-' : '' }} {{ item.address.complement }}
+            </span>
+          </div>
+        </md-card-content>
+        <md-card-actions layout="column" layout-align="end">
+          <md-button class="md-accent" ng-click="viewModel.openAddressOnGoogleMaps(item)">Abrir no mapa</md-button>
+          <md-button class="md-accent" ng-if="!item.cancelled && viewModel.agenda" ng-click="viewModel.addToGoogleCalendar(item)">Adicionar na agenda</md-button>
+          <md-button class="md-primary" ng-if="!item.cancelled && viewModel.requests" ng-click="viewModel.acceptRequest($event, item)">Aceitar pedido</md-button>
+        </md-card-actions>
+      </md-context>
+      <md-divider inset></md-divider>
+    </md-item>
+  </md-card>
+</section>
+
+<!-- Empty view -->
+<section ng-if="viewModel.sections.length == 0 && !viewModel.loading">
+  <div
+    flex
+    layout="column"
+    layout-fill
+    layout-margin
+    layout-padding
+    layout-align="center center">
+    <md-icon
+      ng-style="{'font-size': '96px', height:'96px', width: '96px'}"
+      class="md-accent"
+      tabindex="-1"
+      md-font-src="material-icons">
+      face
+    </md-icon>
+    <span class="md-title">Nenhum pedido</span>
   </div>
-
-  <section ng-repeat="section in viewModel.sections">
-    <md-subheader>{{ section.date | amCalendarDate : null : 'days' }}</md-subheader>
-    <md-card>
-      <md-item ng-repeat="item in section.items"
-        md-colors="{{ item.cancelled ? '::{ backgroundColor: \'red-100\' }' : '' }}">
-        <md-context
-          layout-padding
-          layout="column">
-          <md-card-title>
-            <md-card-title-text>
-              <span class="md-headline">{{ item.code }} - {{ item.service }}</span>
-              <span class="md-caption">{{ item.date | amDateFormat : 'LLLL' }}</span>
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content layout="column">
-            <span class="md-subhead" layout-padding><strong>{{ item.client.name }}</strong></span>
-            <div layout="column" layout-padding>
-              <span class="md-body2">{{ item.address.place }}</span>
-              <span class="md-caption" ng-if="item.address.reference || item.address.complement">
-                {{ item.address.reference }} {{ item.address.reference && item.address.complement ? '-' : '' }} {{ item.address.complement }}
-              </span>
-            </div>
-          </md-card-content>
-          <md-card-actions layout="column" layout-align="end">
-            <md-button class="md-accent" ng-click="viewModel.openAddressOnGoogleMaps(item)">Abrir no mapa</md-button>
-            <md-button class="md-accent" ng-if="!item.cancelled && viewModel.agenda" ng-click="viewModel.addToGoogleCalendar(item)">Adicionar na agenda</md-button>
-            <md-button class="md-primary" ng-if="!item.cancelled && viewModel.requests" ng-click="viewModel.acceptRequest($event, item)">Aceitar pedido</md-button>
-          </md-card-actions>
-        </md-context>
-        <md-divider inset></md-divider>
-      </md-item>
-    </md-card>
-  </section>
-
-  <!-- Empty view -->
-  <section ng-if="viewModel.sections.length == 0 && !viewModel.loading">
-    <div
-      flex
-      layout="column"
-      layout-fill
-      layout-margin
-      layout-padding
-      layout-align="center center">
-      <md-icon
-        ng-style="{'font-size': '96px', height:'96px', width: '96px'}"
-        class="md-accent"
-        tabindex="-1"
-        md-font-src="material-icons">
-        face
-      </md-icon>
-      <span class="md-title">Nenhum pedido</span>
-    </div>
-  </section>
-</md-content>
+</section>
