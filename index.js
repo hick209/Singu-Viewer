@@ -10,8 +10,8 @@ app.use('/images', express.static('images'));
 app.use('/node_modules', express.static('node_modules'));
 
 app.post('/api/login', (req, response) => {
-  var url = 'https://api.singu.com.br/v2/artist/login';
-  var newRequest = request.post({uri: url, json: req.body});
+  const url = 'https://api.singu.com.br/v2/artist/login';
+  const newRequest = request.post({uri: url, json: req.body});
 
   req.pipe(newRequest).pipe(response);
 });
@@ -22,8 +22,8 @@ app.get('/api/requests', (req, response) => {
     'Authorization': `Bearer ${token}`,
   };
 
-  var url = 'https://api.singu.com.br/v2/artist/free-schedules';
-  var newRequest = request.get({uri: url, headers: headers});
+  const url = 'https://api.singu.com.br/v2/artist/free-schedules';
+  const newRequest = request.get({uri: url, headers: headers});
 
   req.pipe(newRequest).pipe(response);
 });
@@ -34,8 +34,8 @@ app.get('/api/agenda', (req, response) => {
     'Authorization': `Bearer ${token}`,
   };
 
-  var url = 'https://api.singu.com.br/v2/artist/my-schedules/new';
-  var newRequest = request.get({uri: url, headers: headers});
+  const url = 'https://api.singu.com.br/v2/artist/my-schedules/new';
+  const newRequest = request.get({uri: url, headers: headers});
 
   req.pipe(newRequest).pipe(response);
 });
@@ -46,8 +46,8 @@ app.get('/api/history', (req, response) => {
     'Authorization': `Bearer ${token}`,
   };
 
-  var url = 'https://api.singu.com.br/v2/artist/my-schedules/old';
-  var newRequest = request.get({uri: url, headers: headers});
+  const url = 'https://api.singu.com.br/v2/artist/my-schedules/old';
+  const newRequest = request.get({uri: url, headers: headers});
 
   req.pipe(newRequest).pipe(response);
 });
@@ -59,8 +59,8 @@ app.put('/api/agenda', (req, response) => {
     'Authorization': `Bearer ${token}`,
   };
 
-  var url = 'https://api.singu.com.br/v2/artist/schedule/${id}';
-  var newRequest = request.put({uri: url, headers: headers});
+  const url = `https://api.singu.com.br/v2/artist/schedule/${id}`;
+  const newRequest = request.put({uri: url, headers: headers});
 
   req.pipe(newRequest).pipe(response);
 });
