@@ -43,22 +43,24 @@
           .textContent(`${item.client.name} - ${item.service} às ${moment(item.date).format('H:mm')}`)
           .targetEvent(event)
           .ok('Aceitar')
-          .cancel('Cancelar');
+          .cancel('Cancelar')
+          .clickOutsideToClose(true);
 
       $mdDialog.show(confirm)
         .then(() => {
           if (!item || !item.id || !AuthService.isSignedIn()) return;
 
           $rootScope.$broadcast('loading', true);
-          return ApiService.putAgenda(AuthService.token, item.id);
+          ApiService.putAgenda(AuthService.token, item.id)
+            .then(() => { $rootScope.$broadcast('loading', false); })
+            .then(viewModel.refresh)
+            .catch(error => {
+              ErrorHandler.treatError(error);
+              $rootScope.$broadcast('loading', false);
+            });
         })
-        .then(() => {
-          $rootScope.$broadcast('loading', false);
-        })
-        .then(viewModel.refresh)
         .catch(error => {
-          ErrorHandler.treatError(error);
-          $rootScope.$broadcast('loading', false);
+          if (error) ErrorHandler.treatError(error);
         });
     }
   }

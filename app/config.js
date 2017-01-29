@@ -22,16 +22,6 @@
 
     $locationProvider.html5Mode(true);
 
-    // Enable CORS
-    // $httpProvider.defaults.useXDomain = true;
-    // $httpProvider.defaults.withCredentials = true;
-    // delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    // $httpProvider.defaults.headers.common['Accept'] = 'application/json';
-    // $httpProvider.defaults.headers.common['Content-Type'] = 'application/json';
-    // $httpProvider.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-    // $httpProvider.defaults.headers.common['Access-Control-Allow-Methods'] = 'OPTIONS,GET,POST,PUT,DELETE';
-    // $httpProvider.defaults.headers.common['Access-Control-Allow-Headers'] = 'Content-Type, Authorization, X-Requested-With';
-
     // Configure routes
     $routeProvider
         .when('/agenda', {
