@@ -4,6 +4,7 @@ const request = require('request');
 const express = require('express');
 const app = express();
 
+app.use('/ServiceWorker.js', express.static('ServiceWorker.js'));
 app.use('/css', express.static('css'));
 app.use('/app', express.static('app'));
 app.use('/images', express.static('images'));

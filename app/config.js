@@ -42,5 +42,12 @@
         .otherwise({
           redirectTo:'/agenda'
         });
+
+    // Prepare the service worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('ServiceWorker.js')
+        .then(() => console.info("Registered service worker!"))
+        .catch(error => console.error(error));
+    }
   }
 })();
