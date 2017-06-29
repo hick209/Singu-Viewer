@@ -17,13 +17,13 @@
       <md-context
         layout-padding
         layout="column">
-        <md-card-title>
+        <md-card-title ng-click="viewModel.collapsed[item.id] = !viewModel.collapsed[item.id]">
           <md-card-title-text>
             <span class="md-headline">{{ item.code }} - {{ item.service }} ({{ item.reward | currency : 'R$' }})</span>
             <span class="md-caption">{{ item.date | amCalendar }}{{ viewModel.requests && item.rangeDateEnd ? ' → ' : '' }}{{ (viewModel.requests && item.rangeDateEnd ? item.rangeDateEnd : null) | date : 'shortTime' }}</span>
           </md-card-title-text>
         </md-card-title>
-        <md-card-content layout="column">
+        <md-card-content layout="column" ng-hide="viewModel.collapsed[item.id]">
           <span class="md-subhead" layout-padding><strong>{{ item.client.name }}</strong></span>
           <div layout="column" layout-padding>
             <span class="md-body2">{{ item.address.place }}</span>
@@ -32,7 +32,7 @@
             </span>
           </div>
         </md-card-content>
-        <md-card-actions layout="column" layout-align="end">
+        <md-card-actions layout="column" layout-align="end" ng-hide="viewModel.collapsed[item.id]">
           <md-button class="md-accent" ng-click="viewModel.openAddressOnGoogleMaps(item)">Abrir no mapa</md-button>
           <md-button class="md-accent" ng-if="!item.cancelled && viewModel.agenda" ng-click="viewModel.addToGoogleCalendar(item)">Adicionar na agenda</md-button>
           <md-button class="md-primary" ng-if="!item.cancelled && viewModel.requests" ng-click="viewModel.acceptRequest($event, item)">Aceitar pedido</md-button>
