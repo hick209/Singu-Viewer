@@ -19,8 +19,8 @@
         layout="column">
         <md-card-title>
           <md-card-title-text>
-            <span class="md-headline">{{ item.code }} - {{ item.service }}</span>
-            <span class="md-caption">{{ item.date | amCalendar }}</span>
+            <span class="md-headline">{{ item.code }} - {{ item.service }} ({{ item.reward | currency : 'R$' }})</span>
+            <span class="md-caption">{{ item.date | amCalendar }}{{ viewModel.requests && item.rangeDateEnd ? ' → ' : '' }}{{ (viewModel.requests && item.rangeDateEnd ? item.rangeDateEnd : null) | date : 'shortTime' }}</span>
           </md-card-title-text>
         </md-card-title>
         <md-card-content layout="column">

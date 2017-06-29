@@ -102,6 +102,8 @@
             id: item._id,
             service: item.services[0].name['pt-BR'],
             date: item.date,
+            rangeDateEnd: item.dateRangeEnd,
+            reward: item.artistValue,
             code: item.shortCode,
             address: {
               place: `${item.address.place}, ${item.address.streetNumber}, ${item.address.neighbor}`,
@@ -115,7 +117,7 @@
               email: item.user.email,
               phone: item.user.phone,
             },
-            cancelled: item.status[0].code === 5,
+            cancelled: item.status && item.status[0].code === 5,
           });
         }
 
