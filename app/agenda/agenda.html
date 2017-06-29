@@ -10,20 +10,34 @@
 </div>
 
 <section ng-repeat="section in viewModel.sections">
-  <md-subheader>{{ section.date | amDateFormat : 'LL' }}</md-subheader>
-  <md-card>
+  <md-subheader ng-init="sessionExpanded = true">
+    <span>{{ section.date | amDateFormat : 'LL' }}</span>
+    <md-button
+      class="md-icon-button"
+      aria-label="Collapse/Expand"
+      ng-click="sessionExpanded = !sessionExpanded">
+      <md-icon
+        class="md-24"
+        tabindex="-1"
+        md-font-src="material-icons">
+        {{ sessionExpanded ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}
+      </md-icon>
+    </md-button>
+  </md-subheader>
+  <md-card ng-show="sessionExpanded">
     <md-item ng-repeat="item in section.items"
       md-colors="{{ item.cancelled ? '::{ backgroundColor: \'red-100\' }' : '' }}">
       <md-context
         layout-padding
-        layout="column">
-        <md-card-title>
+        layout="column"
+        ng-init="itemExpanded = !item.cancelled">
+        <md-card-title ng-click="itemExpanded = !itemExpanded">
           <md-card-title-text>
             <span class="md-headline">{{ item.code }} - {{ item.service }} ({{ item.reward | currency : 'R$' }})</span>
             <span class="md-caption">{{ item.date | amCalendar }}{{ viewModel.requests && item.rangeDateEnd ? ' → ' : '' }}{{ (viewModel.requests && item.rangeDateEnd ? item.rangeDateEnd : null) | date : 'shortTime' }}</span>
           </md-card-title-text>
         </md-card-title>
-        <md-card-content layout="column">
+        <md-card-content layout="column" ng-show="itemExpanded">
           <span class="md-subhead" layout-padding><strong>{{ item.client.name }}</strong></span>
           <div layout="column" layout-padding>
             <span class="md-body2">{{ item.address.place }}</span>
@@ -32,7 +46,7 @@
             </span>
           </div>
         </md-card-content>
-        <md-card-actions layout="column" layout-align="end">
+        <md-card-actions layout="column" layout-align="end" ng-show="itemExpanded">
           <md-button class="md-accent" ng-click="viewModel.openAddressOnGoogleMaps(item)">Abrir no mapa</md-button>
           <md-button class="md-accent" ng-if="!item.cancelled && viewModel.agenda" ng-click="viewModel.addToGoogleCalendar(item)">Adicionar na agenda</md-button>
           <md-button class="md-primary" ng-if="!item.cancelled && viewModel.requests" ng-click="viewModel.acceptRequest($event, item)">Aceitar pedido</md-button>
