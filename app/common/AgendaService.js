@@ -32,7 +32,6 @@
 
       controller.loading = false;
       controller.sections = [];
-      controller.collapsed = {};
       controller.refresh = loadRequests;
       controller.openAddressOnGoogleMaps = openAddressOnGoogleMaps;
       controller.addToGoogleCalendar = addToGoogleCalendar;
@@ -59,7 +58,6 @@
               if (response.status == 200) {
                 const result = response.data;
                 controller.sections = parseSections(result);
-                controller.collapsed = {};
               }
               else {
                 ErrorHandler.treatError(response.statusText);
