@@ -6,11 +6,12 @@
   "email": "hick209@gmail.com",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/hick209/Singu-Viewer"
   },
   "keywords": [],
   "license": "ISC",

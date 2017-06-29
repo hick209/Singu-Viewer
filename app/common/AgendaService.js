@@ -115,7 +115,7 @@
               email: item.user.email,
               phone: item.user.phone,
             },
-            cancelled: false,
+            cancelled: item.status[0].code === 5,
           });
         }
 
